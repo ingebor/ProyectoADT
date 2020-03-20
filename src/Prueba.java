@@ -74,6 +74,69 @@ class LObj {
     private Object data_;
 }
 
+class Util {
+    public static LObj makeNum(Integer num) {
+        return new LObj(Type.NUM, num);
+    }
+    public static LObj makeError(String str) {
+        return new LObj(Type.ERROR, str);
+    }
+    public static LObj makeCons(LObj a, LObj d) {
+        return new LObj(Type.CONS, new Cons(a, d));
+    }
+    public static LObj makeSubr(Subr subr) {
+        return new LObj(Type.SUBR, subr);
+    }
+    public static LObj makeExpr(LObj args, LObj env) {
+        return new LObj(Type.EXPR, new Expr(safeCar(args), safeCdr(args), env));
+    }
+    public static LObj makeSym(String str) {
+        if (str.equals("nil")) {
+            return kNil;
+        } else if (!symbolMap.containsKey(str)) {
+            symbolMap.put(str, new LObj(Type.SYM, str));
+        }
+        return symbolMap.get(str);
+    }
+
+    public static LObj safeCar(LObj obj) {
+        if (obj.tag() == Type.CONS) {
+            return obj.cons().car;
+        }
+        return kNil;
+    }
+    public static LObj safeCdr(LObj obj) {
+        if (obj.tag() == Type.CONS) {
+            return obj.cons().cdr;
+        }
+        return kNil;
+    }
+
+    public static LObj nreverse(LObj lst) {
+        LObj ret = kNil;
+        while (lst.tag() == Type.CONS) {
+            LObj tmp = lst.cons().cdr;
+            lst.cons().cdr = ret;
+            ret = lst;
+            lst = tmp;
+        }
+        return ret;
+    }
+
+    public static LObj pairlis(LObj lst1, LObj lst2) {
+        LObj ret = kNil;
+        while (lst1.tag() == Type.CONS && lst2.tag() == Type.CONS) {
+            ret = makeCons(makeCons(lst1.cons().car, lst2.cons().car), ret);
+            lst1 = lst1.cons().cdr;
+            lst2 = lst2.cons().cdr;
+        }
+        return nreverse(ret);
+    }
+
+    public final static LObj kNil = new LObj(Type.NIL, "nil");
+    private static Map<String, LObj> symbolMap = new HashMap<String, LObj>();
+}
+
 public class Prueba{
 	public static void main(String[] args) {
         InputStreamReader ireader = new InputStreamReader(System.in);

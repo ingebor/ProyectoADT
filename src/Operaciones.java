@@ -12,32 +12,41 @@ public class Operaciones {
 			ArrayList<String> info = new ArrayList<String>();
 			for (int i = 0; i<code.length();i++) {
 				String sign = code.substring(i,i+1);
+				//System.out.println(sign);
 				int count = 0;
-				if(!sign.equals(" ")) {
-					boolean maybeNum = true;
+				if (sign.equalsIgnoreCase(" ")) {
+					//System.out.println("Ignora");
+				}
+				
+				else {
+					int maybeNum = 1;
 					if(Character.isDigit(sign.charAt(0))) {
-						while(maybeNum) {
-							for(int j = i+1;j<code.length();j++) {
+						while(maybeNum==1) {
+							int j =0;
+							for(j = i+1;j<code.length();j++) {
 								String next = code.substring(j,j+1);
 								if(Character.isDigit(next.charAt(0))||next.equals(".")) {
 									sign = sign + next;
+									System.out.println(sign);
 									count++;
 								}
 								else {
+									maybeNum=0;
 									j = code.length()+1;
-									maybeNum=false;
+									
 								}
 							}
 						}
 					}
 				}
+				System.out.println(sign);
 				info.add(sign);
 				i = count + i;
 			}
-			
 			String[] information = new String[info.size()];
 			for(int a = 0; a<info.size();a++) {
 				information[a] = info.get(a);
+				//System.out.println(information[a]);
 			}
 			String[] wait;
 			for(int e = 0;e<open;e++) {

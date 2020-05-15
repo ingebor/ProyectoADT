@@ -1,3 +1,5 @@
+import java.io.File;
+import java.util.Scanner;
 
 /**
  * @author Ayleen Rubio 19003, Andrés Say 19705, Daniela Batz, 19214
@@ -8,6 +10,13 @@ public class Main {
 
     @SuppressWarnings("unchecked")
 	public static void main (String [] args) throws Exception{
-
+    	String code = "";
+    	File archive = new File("prueba.txt");
+    	if(archive.exists()) {
+    		Scanner scan = new Scanner(archive);
+    		code = scan.nextLine();
+    		System.out.println(code);
+    		scan.close();
+    	}
     }
 }

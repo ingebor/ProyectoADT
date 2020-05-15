@@ -10,6 +10,7 @@ public class Main {
 
     @SuppressWarnings("unchecked")
 	public static void main (String [] args) throws Exception{
+    	Operaciones operaciones = new Operaciones();
     	Scanner read = new Scanner(System.in);
     	String code = "";
     	File archive = new File("prueba.txt");
@@ -33,11 +34,15 @@ public class Main {
     			}
     			else if (option ==1) {
     				System.out.println("Aritmetica");
-    				boolean operate = parentesis(code);
-    				if(operate) {
+    				String [] operate = parentesis(code);
+    				int work = Integer.parseInt(operate[1]);
+    				int canti = Integer.parseInt(operate[0]);
+    				if(work==1) {
     					System.out.println("cantidad correcta de parentesis");
+    					System.out.println(operaciones.aritmetica(code,canti ));
+    					System.out.println("llega");
     				}
-    				else {
+    				else if(work==0){
     					System.out.println("cantidad incorrecta de parentesis");
     					flag = false;
     				}
@@ -57,8 +62,9 @@ public class Main {
     	//andres que funcione plis
     }
     
-    public static boolean parentesis (String codigo) {
-    	boolean works = false;
+    public static String[] parentesis (String codigo) {
+    	String[] devolver = new String[] {"0","0"};
+    	int works = 0;
     	int contPA = 0;
     	int contPC = 0;
     	for (int i = 0; i < codigo.length();i++) {
@@ -70,10 +76,14 @@ public class Main {
     		}
     	}
     	if(contPA == contPC || contPA == 0 || contPC == 0) {
-    		works = true;
+    		works = 1;
     	}
     	else
-    		works = false;
-    	return works;		
+    		works = 0;
+    	String dato1 = Integer.toString(contPA);
+    	String dato2 = Integer.toString(works);
+    	devolver[0] = dato1;
+    	devolver[1]=dato2;
+    	return devolver;		
     }
 }

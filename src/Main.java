@@ -7,21 +7,22 @@ import java.util.Scanner;
  * Clase del main, se encuentran varios metodos en esta clase tambien
  */
 public class Main {
+	
 
     @SuppressWarnings("unchecked")
 	public static void main (String [] args) throws Exception{
-    	Operaciones operaciones = new Operaciones();
     	Scanner read = new Scanner(System.in);
+    	Scanner teclado2 = new Scanner(System.in);
     	String code = "";
     	File archive = new File("prueba.txt");
-    	boolean flag = false;
-    	if(archive.exists()) {
+    	boolean flag = true;
+    	/**if(archive.exists()) {
     		Scanner scan = new Scanner(archive);
     		code = scan.nextLine();
     		System.out.println(code);
     		scan.close();
     		flag = true;
-    	}
+    	}*/
     	while(flag) {
     		System.out.println("------------------");
     		System.out.println("|   Bienvenido   |");
@@ -33,22 +34,40 @@ public class Main {
     				throw new Exception();
     			}
     			else if (option ==1) {
+    				String codigo = teclado2.nextLine();
     				System.out.println("Aritmetica");
-    				String [] operate = parentesis(code);
+    				String [] operate = parentesis(codigo);
     				int work = Integer.parseInt(operate[1]);
     				int canti = Integer.parseInt(operate[0]);
     				if(work==1) {
     					System.out.println("cantidad correcta de parentesis");
-    					System.out.println(operaciones.aritmetica(code,canti ));
-    					System.out.println("llega");
+    					//opAritmetica a = new opAritmetica();
+    					//Operaciones o = new Operaciones();
+    					Controller c = new Controller();
+    					System.out.println("Resultado: "+Double.toString(c.aritmetica(codigo,canti)));
+    					//System.out.println("Resultado: "+Double.toString(a.aritmetica(codigo)));
     				}
-    				else if(work==0){
+    				else {
     					System.out.println("cantidad incorrecta de parentesis");
     					flag = false;
     				}
     			}
     			else if (option == 2) {
-    				System.out.println("defun");
+    				
+    				String codigo = teclado2.nextLine();
+    				String [] operate = parentesis(codigo);
+    				int work = Integer.parseInt(operate[1]);
+    				int canti = Integer.parseInt(operate[0]);
+    				canti = canti - 2;
+    				System.out.println(canti);
+    				Controller c = new Controller(codigo);
+    				
+    				System.out.println("Ingrese el valor de: "+c.getParametro());
+    				String h = teclado2.nextLine(); 
+    				//System.out.println("entro");
+					c.setParametro(h);
+					//System.out.println("entro2");
+					System.out.println(c.trabajar(canti));
     			}
     			else if(option == 3) {
     				flag=false;

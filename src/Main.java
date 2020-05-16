@@ -25,6 +25,7 @@ public class Main {
     				throw new Exception();
     			}
     			else if (option ==1) {
+					System.out.println("Ingrese el codigo de LISP: ");
     				String codigo = teclado2.nextLine();
     				System.out.println("Aritmetica");
     				String [] operate = parentesis(codigo);
@@ -60,6 +61,7 @@ public class Main {
 					System.out.println(c.funcion(canti));
     			}
 				else if (option == 3) {
+					System.out.println("Ingrese el codigo de LISP: ");
     				Controller c = new Controller();
     				int predicado = 0;
     				String codigo = teclado2.nextLine();
@@ -126,12 +128,37 @@ public class Main {
     					}
     				}
     			else if (option == 4) {
-    				String codigo = teclado2.nextLine();
+					System.out.println("Ingrese el codigo de LISP: ");
+    				Controller c = new Controller();
+    				String codigo = teclado2.nextLine().toLowerCase();
     				int num = codigo.length();
     				String[] palabra = codigo.split(" ");
+    				int largo = palabra.length;
+    				String completo = "";
+    				
+    				for(int i = 0; i<largo; i++) {
+    					if(palabra[i].equals("(") || palabra[i].equals(")")) {
+    						
+    					}
+    					else {
+    						completo = completo +" "+ palabra[i];
+    					}
+    				}
+    		
+    				String[] atom = completo.split(" ");
+    				
+    				String respuesta = atom[2];
+    				boolean r = c.isNumeric(respuesta);
+    				if(r == false) {
+    					System.out.println("NIL");
+    				}
+    				else if (r==true) {
+    					System.out.println("T");
+    				}
     				
     			}
     			else if (option == 5) {
+					System.out.println("Ingrese el codigo de LISP: ");
     				String codigo = teclado2.nextLine().toLowerCase();
     				int num = codigo.length();
     				String[] palabra = codigo.split(" ");

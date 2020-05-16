@@ -1,4 +1,4 @@
-import java.io.File;
+//import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -9,12 +9,11 @@ import java.util.Scanner;
 public class Main {
 	
 
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
 	public static void main (String [] args) throws Exception{
     	Scanner read = new Scanner(System.in);
     	Scanner teclado2 = new Scanner(System.in);
-    	String code = "";
-    	File archive = new File("prueba.txt");
+    	//File archive = new File("prueba.txt");
     	boolean flag = true;
     	/**if(archive.exists()) {
     		Scanner scan = new Scanner(archive);
@@ -24,10 +23,11 @@ public class Main {
     		flag = true;
     	}*/
     	while(flag) {
+    		System.out.println("\n");
     		System.out.println("------------------");
     		System.out.println("|   Bienvenido   |");
     		System.out.println("------------------");
-    		System.out.println("Que opcion desea realizar?\n1.Aritmetica\n2. Defun\n3. Salir");
+    		System.out.println("Que opcion desea realizar?\n1. Aritmetica\n2. Defun\n3. Salir");
     		try {
     			int option = read.nextInt();
     			if(option<1||option>3) {
@@ -53,10 +53,9 @@ public class Main {
     				}
     			}
     			else if (option == 2) {
-    				
+    				System.out.println("Ingrese el codigo de LISP: ");
     				String codigo = teclado2.nextLine();
     				String [] operate = parentesis(codigo);
-    				int work = Integer.parseInt(operate[1]);
     				int canti = Integer.parseInt(operate[0]);
     				canti = canti - 2;
     				System.out.println(canti);
@@ -67,7 +66,7 @@ public class Main {
     				//System.out.println("entro");
 					c.setParametro(h);
 					//System.out.println("entro2");
-					System.out.println(c.trabajar(canti));
+					System.out.println(c.funcion(canti));
     			}
     			else if(option == 3) {
     				flag=false;
@@ -79,6 +78,9 @@ public class Main {
     		}
     	}
     	//andres que funcione plis
+    	read.close();
+    	teclado2.close();
+    	
     }
     
     public static String[] parentesis (String codigo) {

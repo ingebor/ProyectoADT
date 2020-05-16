@@ -2,12 +2,81 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller {
+	String code = ""; 
+	String name = "";
+	String valueParam = "";
+	String param = "";
+	String[] expresion;
+	
+	/**
+	 * constructor vacio para hacer las operaciones aritmeticas
+	 */
 	public Controller() {
 		
+	}   
+	/**
+	 * quitar espacios de codigo ingresado para poder operar
+	 * llama a la operacion aritmetica
+	 * @param c, codigo ingresado de lisp
+	 */
+	public Controller(String c){
+	code = c; 
+	ArrayList<String>info = new ArrayList<String>(); 
+	for (int i = 0; i<code.length() ; i++){
+		String sign = code.substring(i,i+1);
+		int cont = 0;
+		if (sign.equalsIgnoreCase(" ")) {
+			//los espacios no los agrega 
+		}
+		//agregar lo que no sea espacio
+		else {
+			int maybeNum = 1;
+			char firstC = sign.charAt(0);
+			//el primer caracter es un digito o una letra o un decimal
+			if(Character.isDigit(firstC)||Character.isLetter(firstC)||sign.equals(".")){ 
+				while(maybeNum == 1){
+					for(int j = i+1; j < code.length(); j++){
+						String next = code.substring(j,j+1);
+						char secondC = next.charAt(0);
+						//el segundo caracter es un digito, letra o decimal
+						if(Character.isDigit(secondC)||Character.isLetter(secondC)||next.equals(".")){
+							sign = sign + next; 
+							//lleva la cuenta de los digitos del numero o letras 
+							cont = cont + 1;
+						}
+						else{
+							maybeNum = 0;
+							j = code.length()+1;
+						}
+					}
+				}	
+			}
+			info.add(sign); 
+			i = i+cont;
+			}
+		}
+		//convertir el codigo a un string []
+		String[] information = new String[info.size()];
+		for (int j = 0; j < info.size(); j++) {  
+			information[j] = info.get(j); 
+		}
+		name = information[2]; //nombre
+		param = information[4];  // parametro
+		expresion = new String[information.length - 7]; //expresion
+		for(int i = 6; i <information.length-1; i++){
+			expresion[i-6] = information[i]; //Anadir la expresion
+		}
 	}
+	
+	
+	/**
+	 * 
+	 * @param code, codigo de lisp ingresado
+	 * @param open, cantidad de parentesis abiertos
+	 * @return nresultado de la operacion
+	 */
 	public double aritmetica(String code, int open){
 		double result = 0;
-		//separa el string en una lista
 		//System.out.println("llega");
 		ArrayList<String>info = new ArrayList<String>(); 
 			for (int i = 0; i<code.length() ; i++){
@@ -15,23 +84,23 @@ public class Controller {
 				//System.out.println("Llega 2");
 				int cont = 0;
 				if (sign.equalsIgnoreCase(" ")) {
-					//si es un espacio no agrega nada 
+					//no agrega los espacios
 				}
 				else {
 					//System.out.println("Llega 3");
-					//si no es un espacio agrega el operador :) si es un numero verifica que no haya un numero despues (numeros de mas de un digito)
+					//el primer caracter es digito
 					int siguienteEsNumero = 1;
 					if(Character.isDigit(sign.charAt(0))){
 							//cont = 1;
 						while(siguienteEsNumero == 1){
-							System.out.println("Llega 4");
+							//System.out.println("Llega 4");
 							int j = 0;
 							for(j = i+1; j < code.length(); j++){
 								String next = code.substring(j,j+1);
+								//El segundo caracater es digito
 								if(Character.isDigit(next.charAt(0))||next.equals(".")){
 									//System.out.println("Llega 5");
 									sign = sign + next; 
-									//lleva la cuenta de los digitos del numero
 									cont = cont + 1;
 								}
 								else {
@@ -47,10 +116,11 @@ public class Controller {
 					i = i+cont;
 				}
 			}
+			//codigo con el que se trabajara a un String[]
 			String[] information = new String[info.size()];
 			for (int a = 0; a < info.size(); a++) {  
 				information[a] = info.get(a); 
-				System.out.println(information[a]);
+				//System.out.println(information[a]);
 			} 
 		
 
@@ -58,24 +128,20 @@ public class Controller {
 			for (int i = 0; i<open; i++){
 				//System.out.println("Llega 8");
 				int largo = information.length; 
+				//encontrar el ultimo parentesis para trabajar de adentro hacia afuera
 				int inicio = Arrays.asList(information).lastIndexOf("("); 
-				int fin = Arrays.asList(information).indexOf(")"); 
 				String operador = information[inicio+1];
-				//System.out.println("antes del double");
-				//System.out.println(inicio);
-				//System.out.println(information[inicio+2]);
-				//System.out.println(information[inicio+3]);
+				//valores a operar
 				double o1 = Double.valueOf(information[inicio+2]);
 				double o2 = Double.valueOf(information[inicio+3]);
-				//System.out.println("Despues del double");
 				result = operacionesAritmeticas(operador,o1,o2); 
 				//System.out.println(result);
 				largo = largo - 4;
+				//String[] temporal para ir eliminando lo ya operado
 				wait = new String[largo]; 
 				//System.out.println("Llega 9");
 				for(int j = 0; j<inicio; j++){
 					wait[j] = information[j];
-					//System.out.println(wait[j]);
 				}
 				wait[inicio] = Double.toString(result);
 				//System.out.println("Entro 10");
@@ -83,144 +149,84 @@ public class Controller {
 					//System.out.println("Entro 11");
 					wait[j] = information[j+4];
 				}
+				//nueva operacion a operar luego de haber operado lo mas interno
 				information = wait;
-				//System.out.println("Entro 12");
 			}
 			return result; 
 	}
 	
-    //Pre: se ingresan 3 numeros, el que decide la operacion 1= suma, 2=resta, 3=multiplicacion, 4= ivisión
-	//Post: se devuelve el resultado de cualquiera de la operación
-	
 	
 	/**
 	 * 
-	 * @param operacion
-	 * @param a
-	 * @param b
-	 * @return
+	 * @param signo, signo para realizar operacion
+	 * @param primero, primer operando
+	 * @param segundo, segundo operando
+	 * @return resultado de la operacion
 	 */
-	public double operacionesAritmeticas(String operacion, double a, double b){
-        if(operacion.equalsIgnoreCase("+")){
-			return a+b;
+	public double operacionesAritmeticas(String signo, double primero, double segundo){
+        //suma
+		if(signo.equalsIgnoreCase("+")){
+			return primero+segundo;
 		}
-		else if(operacion.equalsIgnoreCase("-")){
-			return a-b;
+		//resta
+		else if(signo.equalsIgnoreCase("-")){
+			return primero-segundo;
 		}
-		else if(operacion.equalsIgnoreCase("*")){
-			return a*b;
+		//multiplicacion
+		else if(signo.equalsIgnoreCase("*")){
+			return primero*segundo;
 		}
-		else if(operacion.equalsIgnoreCase("/")){
-			return a/b;
+		//division
+		else if(signo.equalsIgnoreCase("/")){
+			return primero/segundo;
 		}
 		else return 0;
     }
 	
-	//--------------------------------------------
-	String codigo; 
-	String nombre;
-	String valorParametro;
-	String parametro;
-	String[] datos;
-	String[] expresion;
+
+
 	/**
-	 * Pre:
-	 * Post: Se define una funcion
-	 * @param c
+	 * separar instrucciones (recursion si funcionara)
+	 * @param open, cantidad de parentesis que abren en el codigo ingresado
+	 * @return resultado final 
 	 */
-    public Controller(String c){
-		codigo = c; 
-		ArrayList<String>data = new ArrayList<String>(); 
-		for (int i = 0; i<codigo.length() ; i++){
-			String simbolo = codigo.substring(i,i+1);
-			int cont = 0;
-			if (simbolo.equalsIgnoreCase(" ")) {
-				//si es un espacio no agrega nada 
-			}
-			else {
-				//si no es un espacio agrega el operador :) si es un numero verifica que no haya un numero despues (numeros de mas de un digito) o letra (palabra)
-				int siguienteEsNumero = 1;
-				char ch1 = simbolo.charAt(0);
-				if(Character.isDigit(ch1)||Character.isLetter(ch1)||simbolo.equals(".")){
-					//cont = 1;
-					while(siguienteEsNumero == 1){
-						int j = 0;
-						for(j = i+1; j < codigo.length(); j++){
-							String ssiguiente = codigo.substring(j,j+1);
-							char ch = ssiguiente.charAt(0);
-							if(Character.isDigit(ch)||Character.isLetter(ch)||ssiguiente.equals(".")){
-								simbolo = simbolo + ssiguiente; 
-								//lleva la cuenta de los digitos del numero o letras 
-								cont = cont + 1;
-							}
-							else{
-								siguienteEsNumero = 0;
-								j = codigo.length()+1;
-							}
-						}
-					}	
-				}
-				data.add(simbolo); 
-				i = i+cont;
-			}
-		}
-		datos = new String[data.size()];
-		for (int j = 0; j < data.size(); j++) {  
-			datos[j] = data.get(j); 
-		}
-		nombre = datos[2];
-		parametro = datos[4];
-		expresion = new String[datos.length - 7];
-		//la expresion de la funcion esta de 5 en adelante 
-		for(int i = 6; i <datos.length-1; i++){
-			expresion[i-6] = datos[i];
-		}
-    }
-    //va a separar cada instruccion y si es necesario llamarse a ella misma (recursion)
+	
 	int recursivo = 0;
-    public String trabajar(int open){
-		 recursivo = 0;
-		 System.out.println("entro1 trabajar");
-		for (int i = 0; i<expresion.length; i++){
-			if(expresion[i].equals(nombre)){
-				recursivo = recursivo +1;; 
-			}
-		}
-		
-		if(recursivo == 0){
-			System.out.println("Entro 3");
-			
+    public String funcion(int open){
+		if(recursivo == 0){			
 			for(int i = 0; i<expresion.length; i++){
-				//System.out.println("Entro 4");
-				if(expresion[i].equals(parametro))
+				if(expresion[i].equals(param))
 				{
-					//System.out.println("Entro 5");
-					expresion[i] = valorParametro;
+					expresion[i] = valueParam;
 				}
 			}
-			//depende que tiene la expresion 
-			String expresionString ="";
+			String codCalcular ="";
 			for(int i = 0; i<expresion.length;i++){
 				//System.out.println("Entro 6");
-				expresionString = expresionString + " "+ expresion[i]; 
+				codCalcular = codCalcular + " "+ expresion[i]; 
 			}
 			
-			//opAritmetica a = new opAritmetica();
-			//System.out.println(expresionString);
-			//a.aritmetica(expresionString, open);
-			//System.out.println("Entro 8");
-			return "Resultado: " + Double.toString(aritmetica(expresionString,open));
+			return "Resultado: " + Double.toString(aritmetica(codCalcular,open));
 		}
 		else{
 			return null;
 		}
     }
 	
+    /**
+     * obtener en parametro de lo ingresado
+     * @return parametro
+     */
 	public String getParametro(){
-		return parametro;
+		return param;
 	}
-	public void setParametro(String v){
-		valorParametro = v;
+	
+	/**
+	 * definir el valor del parametro
+	 * @param v
+	 */
+	public void setParametro(String value){
+		valueParam = value;
 	}
 	
 

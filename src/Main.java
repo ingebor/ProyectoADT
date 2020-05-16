@@ -1,10 +1,9 @@
-//import java.io.File;
 import java.util.Scanner;
 
 /**
  * @author Ayleen Rubio 19003, Andrés Say 19705, Daniela Batz, 19214
  * @date 20/03/2020
- * Clase del main, se encuentran varios metodos en esta clase tambien
+ * Clase del main
  */
 public class Main {
 	
@@ -13,24 +12,16 @@ public class Main {
 	public static void main (String [] args) throws Exception{
     	Scanner read = new Scanner(System.in);
     	Scanner teclado2 = new Scanner(System.in);
-    	//File archive = new File("prueba.txt");
     	boolean flag = true;
-    	/**if(archive.exists()) {
-    		Scanner scan = new Scanner(archive);
-    		code = scan.nextLine();
-    		System.out.println(code);
-    		scan.close();
-    		flag = true;
-    	}*/
     	while(flag) {
     		System.out.println("\n");
     		System.out.println("------------------");
     		System.out.println("|   Bienvenido   |");
     		System.out.println("------------------");
-    		System.out.println("Que opcion desea realizar?\n1. Aritmetica\n2. Defun\n3. Salir");
+    		System.out.println("Que opcion desea realizar?\n1. Aritmetica\n2. Defun\n3. Predicado (<,>,=)\n4. SetQ\n5.\n6. Salir");
     		try {
     			int option = read.nextInt();
-    			if(option<1||option>3) {
+    			if(option<1||option>6) {
     				throw new Exception();
     			}
     			else if (option ==1) {
@@ -78,7 +69,7 @@ public class Main {
     				String[] palabra = codigo.split(" ");
     				int pal = palabra.length;
     				String completo = "";
-    				completo = c.separar(num, palabra, completo);
+    				//completo = c.separar(num, palabra, completo);
     				
     				for(int i = 0; i<pal; i++) {
     					if(palabra[i].equals("(") || palabra[i].equals(")")) {
@@ -201,6 +192,13 @@ public class Main {
     	
     }
     
+	/**
+	 * Cuenta la cantidad de parentesis que abren y cierran para ver
+	 * si es la cantidad adecuada
+	 * @param codigo, String, codigo de lisp
+	 * @return 1 si es la misma cantidad de parentes, 0 caso contrario
+	 * 			y cantidad de parentesis de apertura
+	 */
     public static String[] parentesis (String codigo) {
     	String[] devolver = new String[] {"0","0"};
     	int works = 0;

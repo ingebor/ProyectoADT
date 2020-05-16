@@ -58,7 +58,7 @@ public class Main {
     				String [] operate = parentesis(codigo);
     				int canti = Integer.parseInt(operate[0]);
     				canti = canti - 2;
-    				System.out.println(canti);
+    				//System.out.println(canti);
     				Controller c = new Controller(codigo);
     				
     				System.out.println("Ingrese el valor de: "+c.getParametro());

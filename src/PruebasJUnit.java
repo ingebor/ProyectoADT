@@ -15,5 +15,4 @@ class PruebasJUnit {
 		double esperado = 12.0;
 		assertEquals(esperado,resultado);
 	}
-
 }

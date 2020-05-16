@@ -1,12 +1,17 @@
+/**
+ * @author Ayleen Rubio 19003, Andrés Say 19705, Daniela Batz, 19214
+ * @date 20/03/2020
+ * Clase del main
+ */
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller {
-	String code = ""; 
-	String name = "";
-	String valueParam = "";
-	String param = "";
-	String[] expresion;
+	private String code = ""; 
+	private String name = "";
+	private String valueParam = "";
+	private String param = "";
+	private String[] expresion;
 	
 	/**
 	 * constructor vacio para hacer las operaciones aritmeticas
@@ -229,6 +234,13 @@ public class Controller {
 		valueParam = value;
 	}
 	
+	/**
+	 * Quitar parentesis
+	 * @param num
+	 * @param palabra
+	 * @param completo
+	 * @return
+	 */
 	public String separar(int num, String[] palabra,String completo) {
 		for(int i = 0; i<num; i++) {
 			if(palabra[i].equals("(") || palabra[i].equals(")")) {
@@ -241,6 +253,14 @@ public class Controller {
 		return completo;
 		
 	}
+	/**
+	 * Determina el predicado ingresado
+	 * @param cont
+	 * @param completo
+	 * @param predicado
+	 * @param final1
+	 * @return
+	 */
 	public String cadena(int cont, String completo,int predicado,String final1) {
 		for(int i = 0; i < cont; i++) {
 			if(completo.substring(i,i+1).equals("<")) {
@@ -261,6 +281,14 @@ public class Controller {
 		}
 		return final1;
 	}
+	
+	
+	/** 
+	 * devuelve valor true o false
+	 * @param numero1
+	 * @param numero2
+	 * @param predicado
+	 */
 	public void respuesta(int numero1, int numero2, int predicado) {
 		if(predicado==1) {
 			if(numero1<numero2) {

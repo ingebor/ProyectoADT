@@ -229,5 +229,64 @@ public class Controller {
 		valueParam = value;
 	}
 	
+	public String separar(int num, String[] palabra,String completo) {
+		for(int i = 0; i<num; i++) {
+			if(palabra[i].equals("(") || palabra[i].equals(")")) {
+				
+			}
+			else {
+				completo = completo + palabra[i];
+			}
+		}
+		return completo;
+		
+	}
+	public String cadena(int cont, String completo,int predicado,String final1) {
+		for(int i = 0; i < cont; i++) {
+			if(completo.substring(i,i+1).equals("<")) {
+				predicado = 1;
+			}
+			else if(completo.substring(i,i+1).equals(">")) {
+				predicado = 2;
+			}
+			else if (completo.substring(i,i+1).equals("=")) {
+				predicado = 3;
+			}
+			else if (completo.substring(i,i+1).equals("ATOM")) {
+				predicado = 4;
+			}
+			else {
+				final1 = final1 + completo.substring(i,i+1);
+			}
+		}
+		return final1;
+	}
+	public void respuesta(int numero1, int numero2, int predicado) {
+		if(predicado==1) {
+			if(numero1<numero2) {
+				System.out.println("T");
+				}
+			else {
+				System.out.println("NIL");
+				}
+			}
+		else if(predicado==2) {
+			if(numero1>numero2) {
+				System.out.println("T");
+				}
+			else {
+				System.out.println("NIL");
+				}
+			}
+		else if(predicado==3) {
+			if(numero1 == numero2) {
+				System.out.println("T");
+				}
+			else {
+				System.out.println("NIL");
+				}
+			}
+		}
+	
 
 }

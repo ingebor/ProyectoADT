@@ -18,13 +18,13 @@ public class Main {
     		System.out.println("------------------");
     		System.out.println("|   Bienvenido   |");
     		System.out.println("------------------");
-    		System.out.println("Que opcion desea realizar?\n1. Aritmetica\n2. Defun\n3. Predicado (<,>,=)\n4. SetQ\n5.\n6. Salir");
+    		System.out.println("Que opcion desea realizar?\n1. Aritmetica\n2. Defun\n3. Predicado (<,>,=)\n4. ATOM\n5. SETQ\n6. Salir");
     		try {
     			int option = read.nextInt();
     			if(option<1||option>6) {
     				throw new Exception();
     			}
-    			else if (option ==1) {
+    			else if (option ==1) { //Operacion aritmetica
 					System.out.println("Ingrese el codigo de LISP: ");
     				String codigo = teclado2.nextLine();
     				System.out.println("Aritmetica");
@@ -44,7 +44,7 @@ public class Main {
     					flag = false;
     				}
     			}
-    			else if (option == 2) {
+    			else if (option == 2) { //DEFUN
     				System.out.println("Ingrese el codigo de LISP: ");
     				String codigo = teclado2.nextLine();
     				String [] operate = parentesis(codigo);
@@ -60,7 +60,7 @@ public class Main {
 					//System.out.println("entro2");
 					System.out.println(c.funcion(canti));
     			}
-				else if (option == 3) {
+				else if (option == 3) { //Predicados
 					System.out.println("Ingrese el codigo de LISP: ");
     				Controller c = new Controller();
     				int predicado = 0;
@@ -127,7 +127,7 @@ public class Main {
     						}
     					}
     				}
-    			else if (option == 4) {
+    			else if (option == 4) { //Atom
 					System.out.println("Ingrese el codigo de LISP: ");
     				Controller c = new Controller();
     				String codigo = teclado2.nextLine().toLowerCase();
@@ -157,7 +157,7 @@ public class Main {
     				}
     				
     			}
-    			else if (option == 5) {
+    			else if (option == 5) { //SETQ
 					System.out.println("Ingrese el codigo de LISP: ");
     				String codigo = teclado2.nextLine().toLowerCase();
     				int num = codigo.length();

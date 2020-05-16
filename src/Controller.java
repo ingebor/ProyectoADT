@@ -316,6 +316,11 @@ public class Controller {
 			}
 		}
 		
+	/**
+	 * Revisa si el String ingresado es un numero o no
+	 * @param str, string ingresado
+	 * @return boolean, si ha ingresado un numero o no
+	 */
 	public boolean isNumeric(String str) { 
 		  try {  
 		    Double.parseDouble(str);  

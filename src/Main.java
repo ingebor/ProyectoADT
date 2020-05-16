@@ -132,7 +132,23 @@ public class Main {
     				
     			}
     			else if (option == 5) {
-    				
+    				String codigo = teclado2.nextLine().toLowerCase();
+    				int num = codigo.length();
+    				String[] palabra = codigo.split(" ");
+    				int largo = palabra.length;
+    				String pred = "";
+    				for(int i = 0; i<largo;i++) {
+    					if(palabra[i].equals("setq") || palabra[i].equals("(") || palabra[i].equals(")")) {
+    						
+    					}
+    					else {
+    						pred = pred+palabra[i];
+    					}
+    				}
+    				int len = pred.length();
+    				for(int i = 0;i<len;i = i+2) {
+    					System.out.println(pred.substring(i, i+1)+"="+pred.substring(i+1, i+2));
+    				}
     			}
     			else if(option == 6) {
     				flag=false;
